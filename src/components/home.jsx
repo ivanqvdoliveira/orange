@@ -18,6 +18,7 @@ const Home = () => {
   const [configModal, setConfigModal] = useState('')
   const [showModal, setShowModal] = useState(false)
   const [nameList, setNameList] = useState({})
+  const [repeatUser, setRepeatUser] = useState({})
 
   useEffect(() => {
     firebaseConection
@@ -156,19 +157,26 @@ const Home = () => {
   }
 
   const confirmRepeated = () => {
-    const user = nameList.filter((morador) => morador.apartamento === formValues.apartamento)
+    const user = nameList.find((morador) => morador.apartamento === formValues.apartamento)
 
-    return Boolean(user.length)
+    const hasUser = Boolean(user?.id)
+    console.log(hasUser)
+    if (hasUser) {
+      setRepeatUser(user?.id)
+    }
+
+    return hasUser
   }
 
   const confirmSent = () => {
     firebase
-      .firestore()
-      .collection('enquete')
-      .add(formValues)
-      .then(() => setShowModalSuccess(true))
-      .catch(() => setErrorModal())
-  }
+    .firestore()
+    .collection('enquete')
+    .doc(repeatUser)
+    .set(formValues)
+    .then(() => setShowModalSuccess(true))
+    .catch(() => setErrorModal())
+}
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -189,7 +197,12 @@ const Home = () => {
       return
     }
 
-    confirmSent()
+    firebase
+      .firestore()
+      .collection('enquete')
+      .add(formValues)
+      .then(() => setShowModalSuccess(true))
+      .catch(() => setErrorModal())
   }
 
   const closeModal = () => {
