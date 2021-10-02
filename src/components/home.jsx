@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { APTOS, PERIOD, WEEK_DAYS } from '../constants/selectsFill'
-import { DEFAULT_VALUES } from '../constants/defaultValues'
+import { DEFAULT_VALUES, DEFAULT_COUNT } from '../constants/defaultValues'
 import firebaseConection from '../utils/firebase'
 import firebase from 'firebase'
 import Modal from '../utils/Modal'
@@ -8,17 +8,110 @@ import {
   StyledHome,
   StyledDay,
   WarningMessage,
+  StyledResident,
 } from './styles'
 
-const Home = () => {
+const Home = (props) => {
+  const { showResults } = props
   const [formValues, setFormValues] = useState(DEFAULT_VALUES)
   const [showWarning, setShowWarning] = useState(false)
   const [validDays, setValidDays] = useState(true)
   const [showWarningMsg, setShowWarningMsg] = useState(false)
   const [configModal, setConfigModal] = useState('')
   const [showModal, setShowModal] = useState(false)
-  const [nameList, setNameList] = useState({})
+  const [nameList, setNameList] = useState([])
   const [repeatUser, setRepeatUser] = useState({})
+  const [countList, setCountList] = useState(DEFAULT_COUNT)
+
+  const registerCount = useCallback((list) => {
+    let newObject = {...countList}
+
+    list.map((res) => {
+      if (res.allWeek) {
+        newObject = {
+          ...newObject,
+          allWeek: newObject.allWeek + 1
+        }
+      }
+
+      WEEK_DAYS.map((day) => {
+        if (!res[day.value].personalFlow) return null
+
+        if (res[day.value].notAllDay) {
+          res[day.value].period.map((d) => {
+            switch (day.value) {
+              case 'segunda':
+                newObject = {
+                  ...newObject,
+                  segManha: d === 'manha' ? newObject.segManha + 1 : newObject.segManha,
+                  segTarde: d === 'tarde' ? newObject.segTarde + 1 : newObject.segTarde,
+                  segNoite: d === 'noite' ? newObject.segNoite + 1 : newObject.segNoite,
+                }
+                break;
+
+              case 'terca':
+                newObject = {
+                  ...newObject,
+                  terManha: d === 'manha' ? newObject.terManha + 1 : newObject.terManha,
+                  terTarde: d === 'tarde' ? newObject.terTarde + 1 : newObject.terTarde,
+                  terNoite: d === 'noite' ? newObject.terNoite + 1 : newObject.terNoite,
+                }
+                break;
+
+              case 'quarta':
+                newObject = {
+                  ...newObject,
+                  quaManha: d === 'manha' ? newObject.quaManha + 1 : newObject.quaManha,
+                  quaTarde: d === 'tarde' ? newObject.quaTarde + 1 : newObject.quaTarde,
+                  quaNoite: d === 'noite' ? newObject.quaNoite + 1 : newObject.quaNoite,
+                }
+                break;
+
+              case 'quinta':
+                newObject = {
+                  ...newObject,
+                  quiManha: d === 'manha' ? newObject.quiManha + 1 : newObject.quiManha,
+                  quiTarde: d === 'tarde' ? newObject.quiTarde + 1 : newObject.quiTarde,
+                  quiNoite: d === 'noite' ? newObject.quiNoite + 1 : newObject.quiNoite,
+                }
+                break;
+
+              case 'sexta':
+                newObject = {
+                  ...newObject,
+                  sexManha: d === 'manha' ? newObject.sexManha + 1 : newObject.sexManha,
+                  sexTarde: d === 'tarde' ? newObject.sexTarde + 1 : newObject.sexTarde,
+                  sexNoite: d === 'noite' ? newObject.sexNoite + 1 : newObject.sexNoite,
+                }
+                break;
+
+              case 'sabado':
+                newObject = {
+                  ...newObject,
+                  sabManha: d === 'manha' ? newObject.sabManha + 1 : newObject.sabManha,
+                  sabTarde: d === 'tarde' ? newObject.sabTarde + 1 : newObject.sabTarde,
+                  sabNoite: d === 'noite' ? newObject.sabNoite + 1 : newObject.sabNoite,
+                }
+                break;
+
+              default:
+                break;
+            }
+          })
+        }
+        return null
+      })
+
+      setCountList(newObject)
+      return null
+    })
+
+
+    // setCountList({
+    //   ...countList,
+    //   allWeek: countList.allWeek + 1,
+    // })
+  }, [countList])
 
   useEffect(() => {
     firebaseConection
@@ -29,6 +122,7 @@ const Home = () => {
         id: doc.id,
         ...doc.data()
       }))
+      registerCount(morador)
       setNameList(morador)
     })
   }, [])
@@ -245,62 +339,105 @@ const Home = () => {
     }
   }
 
+  const renderPersonalWeek = (day, item) => {
+    if (!item[day.value].personalFlow) return
+
+    return (
+      <>
+        <p>{item[day.value].notAllDay ? (
+          <>
+            <p>{day.name}</p>
+            {item[day.value].period.map((d) => <p>{d}</p>)}
+          </>
+        ) : (
+          <>
+            <p>{day.name}</p>
+            <p>Qualquer período</p>
+          </>
+        )}</p>
+      </>
+    )
+  }
+
+  const renderResident = (item) => (
+    <StyledResident key={item.id}>
+      <p>Nome: {item.morador}</p>
+      <p>Apartamento: {item.apartamento}</p>
+      {item.allWeek ? (
+        <>
+          <p>Disponível a semana inteira, qualquer horário.</p>
+        </>
+      ) : WEEK_DAYS.map((day) => renderPersonalWeek(day, item))}
+    </StyledResident>
+  )
+
+  const renderResults = () => (
+    <StyledHome>
+      {nameList.map((item) => renderResident(item))}
+    </StyledHome>
+  )
+
   return (
     <div className="squad">
+      {console.log(countList)}
       {showModal && renderModal()}
-      <StyledHome>
-        <p>Vamos agendar o dia para próxima reunião com a Gold?</p>
-        <p>Eles precisam que a data da reunião seja enviada antes de 10 dias da data, então, primeiramente, vamos ver qual o melhor dia da semana e horário, e passar para eles uma data baseada nessas informações.</p>
-        <p>Fico no aguardo :) </p>
-        {showWarning && (
-          <WarningMessage>
-            Nome do Morador e Apartamento são obrigatórios.
-          </WarningMessage>
-        )}
-        {showWarningMsg && (
-          <WarningMessage>
-            Se não vai detalhar nenhum dia, escolha a opção: Qualquer dia e horário.
-          </WarningMessage>
-        )}
-        <div className="format-style">
-          <form onSubmit={onSubmit}>
-            <input
-              onChange={onInputChange}
-              type="text"
-              name="morador"
-              placeholder="Seu nome?"
-              value={formValues.morador}
-            />
-            <select
-              onChange={onInputChange}
-              name="apartamento"
-              value={Number(formValues.apartamento)}
-            >
-              <option>Escolha um apartamento</option>
-              {APTOS.map((apto) => renderOtptions(apto))}
-            </select>
-            <div>
-              <label className={formValues.allWeek ? 'preference active' : 'preference'}>
-                <input onChange={onChangePreference} type="radio" defaultChecked value="yes" name="allWeek" />
-                Qualquer dia e horário
-              </label>
-              <label className={formValues.allWeek ? 'preference' : 'preference active'}>
-                <input onChange={onChangePreference} type="radio" value="no" name="allWeek" />
-                Escolher dias e horários
-              </label>
-            </div>
-
-            {!formValues.allWeek && (
-              <div>
-                {WEEK_DAYS.map((day) => renderWeekdays(day))}
-              </div>
+      {showResults ? renderResults() : (
+        <>
+          <StyledHome>
+            <p>Vamos agendar o dia para próxima reunião com a Gold?</p>
+            <p>Eles precisam que a data da reunião seja enviada antes de 10 dias da data, então, primeiramente, vamos ver qual o melhor dia da semana e horário, e passar para eles uma data baseada nessas informações.</p>
+            <p>Fico no aguardo :) </p>
+            {showWarning && (
+              <WarningMessage>
+                Nome do Morador e Apartamento são obrigatórios.
+              </WarningMessage>
             )}
-            <button type="submit">
-              Enviar
-            </button>
-          </form>
-        </div>
-      </StyledHome>
+            {showWarningMsg && (
+              <WarningMessage>
+                Se não vai detalhar nenhum dia, escolha a opção: Qualquer dia e horário.
+              </WarningMessage>
+            )}
+            <div className="format-style">
+              <form onSubmit={onSubmit}>
+                <input
+                  onChange={onInputChange}
+                  type="text"
+                  name="morador"
+                  placeholder="Seu nome?"
+                  value={formValues.morador}
+                />
+                <select
+                  onChange={onInputChange}
+                  name="apartamento"
+                  value={Number(formValues.apartamento)}
+                >
+                  <option>Escolha um apartamento</option>
+                  {APTOS.map((apto) => renderOtptions(apto))}
+                </select>
+                <div>
+                  <label className={formValues.allWeek ? 'preference active' : 'preference'}>
+                    <input onChange={onChangePreference} type="radio" defaultChecked value="yes" name="allWeek" />
+                    Qualquer dia e horário
+                  </label>
+                  <label className={formValues.allWeek ? 'preference' : 'preference active'}>
+                    <input onChange={onChangePreference} type="radio" value="no" name="allWeek" />
+                    Escolher dias e horários
+                  </label>
+                </div>
+
+                {!formValues.allWeek && (
+                  <div>
+                    {WEEK_DAYS.map((day) => renderWeekdays(day))}
+                  </div>
+                )}
+                <button type="submit">
+                  Enviar
+                </button>
+              </form>
+            </div>
+          </StyledHome>
+        </>
+      )}
     </div>
   )
 }

@@ -125,3 +125,10 @@ export const WarningMessage = styled.div`
   background-color: #ff9a9a;
   color: #7a0000;
 `
+
+export const StyledResident = styled.div`
+  display: block;
+  background-color: rgba(0, 0, 0, .1);
+  margin-bottom: 20px;
+  padding: 10px;
+`

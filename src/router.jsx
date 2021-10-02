@@ -1,17 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Home from './components/home'
 import Menu from './components/menu'
 
-const defaultRoute = () => (
-  <Router>
-    <div className='full-height'>
-      <Menu />
+const DefaultRoute = () => {
+  const [showResults, setShowResults] = useState(false)
 
-      <Route exact path="/" component={Home}/>
-    </div>
-  </Router>
-)
+  const handleClick = () => {
 
-export default defaultRoute
+    setShowResults(!showResults)
+  }
+
+  
+  return (
+    <Router>
+      <div className='full-height'>
+        <Menu handleClick={handleClick} />
+
+        <Route exact path="/" component={(props) => <Home {...props} showResults={showResults} />} />
+      </div>
+    </Router>
+  )
+}
+
+export default DefaultRoute
 
