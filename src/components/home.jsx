@@ -9,6 +9,7 @@ import {
   StyledDay,
   WarningMessage,
   StyledResident,
+  StyledTable,
 } from './styles'
 
 const Home = (props) => {
@@ -21,97 +22,6 @@ const Home = (props) => {
   const [showModal, setShowModal] = useState(false)
   const [nameList, setNameList] = useState([])
   const [repeatUser, setRepeatUser] = useState({})
-  const [countList, setCountList] = useState(DEFAULT_COUNT)
-
-  const registerCount = useCallback((list) => {
-    let newObject = {...countList}
-
-    list.map((res) => {
-      if (res.allWeek) {
-        newObject = {
-          ...newObject,
-          allWeek: newObject.allWeek + 1
-        }
-      }
-
-      WEEK_DAYS.map((day) => {
-        if (!res[day.value].personalFlow) return null
-
-        if (res[day.value].notAllDay) {
-          res[day.value].period.map((d) => {
-            switch (day.value) {
-              case 'segunda':
-                newObject = {
-                  ...newObject,
-                  segManha: d === 'manha' ? newObject.segManha + 1 : newObject.segManha,
-                  segTarde: d === 'tarde' ? newObject.segTarde + 1 : newObject.segTarde,
-                  segNoite: d === 'noite' ? newObject.segNoite + 1 : newObject.segNoite,
-                }
-                break;
-
-              case 'terca':
-                newObject = {
-                  ...newObject,
-                  terManha: d === 'manha' ? newObject.terManha + 1 : newObject.terManha,
-                  terTarde: d === 'tarde' ? newObject.terTarde + 1 : newObject.terTarde,
-                  terNoite: d === 'noite' ? newObject.terNoite + 1 : newObject.terNoite,
-                }
-                break;
-
-              case 'quarta':
-                newObject = {
-                  ...newObject,
-                  quaManha: d === 'manha' ? newObject.quaManha + 1 : newObject.quaManha,
-                  quaTarde: d === 'tarde' ? newObject.quaTarde + 1 : newObject.quaTarde,
-                  quaNoite: d === 'noite' ? newObject.quaNoite + 1 : newObject.quaNoite,
-                }
-                break;
-
-              case 'quinta':
-                newObject = {
-                  ...newObject,
-                  quiManha: d === 'manha' ? newObject.quiManha + 1 : newObject.quiManha,
-                  quiTarde: d === 'tarde' ? newObject.quiTarde + 1 : newObject.quiTarde,
-                  quiNoite: d === 'noite' ? newObject.quiNoite + 1 : newObject.quiNoite,
-                }
-                break;
-
-              case 'sexta':
-                newObject = {
-                  ...newObject,
-                  sexManha: d === 'manha' ? newObject.sexManha + 1 : newObject.sexManha,
-                  sexTarde: d === 'tarde' ? newObject.sexTarde + 1 : newObject.sexTarde,
-                  sexNoite: d === 'noite' ? newObject.sexNoite + 1 : newObject.sexNoite,
-                }
-                break;
-
-              case 'sabado':
-                newObject = {
-                  ...newObject,
-                  sabManha: d === 'manha' ? newObject.sabManha + 1 : newObject.sabManha,
-                  sabTarde: d === 'tarde' ? newObject.sabTarde + 1 : newObject.sabTarde,
-                  sabNoite: d === 'noite' ? newObject.sabNoite + 1 : newObject.sabNoite,
-                }
-                break;
-
-              default:
-                break;
-            }
-          })
-        }
-        return null
-      })
-
-      setCountList(newObject)
-      return null
-    })
-
-
-    // setCountList({
-    //   ...countList,
-    //   allWeek: countList.allWeek + 1,
-    // })
-  }, [countList])
 
   useEffect(() => {
     firebaseConection
@@ -122,10 +32,9 @@ const Home = (props) => {
         id: doc.id,
         ...doc.data()
       }))
-      registerCount(morador)
       setNameList(morador)
     })
-  }, [])
+  }, [setNameList])
 
   const renderOtptions = (apto) => (
     <option key={apto.value} value={apto.value}>
@@ -254,7 +163,6 @@ const Home = (props) => {
     const user = nameList.find((morador) => morador.apartamento === formValues.apartamento)
 
     const hasUser = Boolean(user?.id)
-    console.log(hasUser)
     if (hasUser) {
       setRepeatUser(user?.id)
     }
@@ -339,20 +247,20 @@ const Home = (props) => {
     }
   }
 
-  const renderPersonalWeek = (day, item) => {
+  const renderPersonalWeek = (day, index, item) => {
     if (!item[day.value].personalFlow) return
 
     return (
       <>
-        <p>{item[day.value].notAllDay ? (
+        <p key={index}>{item[day.value].notAllDay ? (
           <>
-            <p>{day.name}</p>
-            {item[day.value].period.map((d) => <p>{d}</p>)}
+            <span>{day.name}</span>
+            {item[day.value].period.map((d, index) => <span key={index}>{d}</span>)}
           </>
         ) : (
           <>
-            <p>{day.name}</p>
-            <p>Qualquer período</p>
+            <span>{day.name}</span>
+            <span>Qualquer período</span>
           </>
         )}</p>
       </>
@@ -361,25 +269,201 @@ const Home = (props) => {
 
   const renderResident = (item) => (
     <StyledResident key={item.id}>
-      <p>Nome: {item.morador}</p>
-      <p>Apartamento: {item.apartamento}</p>
+      <p><b>{item.morador}</b> - apto {item.apartamento}</p>
       {item.allWeek ? (
         <>
           <p>Disponível a semana inteira, qualquer horário.</p>
         </>
-      ) : WEEK_DAYS.map((day) => renderPersonalWeek(day, item))}
+      ) : WEEK_DAYS.map((day, index) => renderPersonalWeek(day, index, item))}
     </StyledResident>
   )
+  const registerCount = () => {
+    let newObject = DEFAULT_COUNT
 
-  const renderResults = () => (
-    <StyledHome>
-      {nameList.map((item) => renderResident(item))}
-    </StyledHome>
-  )
+    nameList.map((res) => {
+      if (res.allWeek) {
+        newObject = {
+          ...newObject,
+          allWeek: newObject.allWeek + 1
+        }
+      }
+
+      WEEK_DAYS.map((day) => {
+        if (!res[day.value].personalFlow) return null
+
+        if (res[day.value].notAllDay) {
+          res[day.value].period.map((d) => {
+            switch (day.value) {
+              case 'segunda':
+                newObject = {
+                  ...newObject,
+                  segManha: d === 'manha' ? newObject.segManha + 1 : newObject.segManha,
+                  segTarde: d === 'tarde' ? newObject.segTarde + 1 : newObject.segTarde,
+                  segNoite: d === 'noite' ? newObject.segNoite + 1 : newObject.segNoite,
+                }
+                break;
+
+              case 'terca':
+                newObject = {
+                  ...newObject,
+                  terManha: d === 'manha' ? newObject.terManha + 1 : newObject.terManha,
+                  terTarde: d === 'tarde' ? newObject.terTarde + 1 : newObject.terTarde,
+                  terNoite: d === 'noite' ? newObject.terNoite + 1 : newObject.terNoite,
+                }
+                break;
+
+              case 'quarta':
+                newObject = {
+                  ...newObject,
+                  quaManha: d === 'manha' ? newObject.quaManha + 1 : newObject.quaManha,
+                  quaTarde: d === 'tarde' ? newObject.quaTarde + 1 : newObject.quaTarde,
+                  quaNoite: d === 'noite' ? newObject.quaNoite + 1 : newObject.quaNoite,
+                }
+                break;
+
+              case 'quinta':
+                newObject = {
+                  ...newObject,
+                  quiManha: d === 'manha' ? newObject.quiManha + 1 : newObject.quiManha,
+                  quiTarde: d === 'tarde' ? newObject.quiTarde + 1 : newObject.quiTarde,
+                  quiNoite: d === 'noite' ? newObject.quiNoite + 1 : newObject.quiNoite,
+                }
+                break;
+
+              case 'sexta':
+                newObject = {
+                  ...newObject,
+                  sexManha: d === 'manha' ? newObject.sexManha + 1 : newObject.sexManha,
+                  sexTarde: d === 'tarde' ? newObject.sexTarde + 1 : newObject.sexTarde,
+                  sexNoite: d === 'noite' ? newObject.sexNoite + 1 : newObject.sexNoite,
+                }
+                break;
+
+              case 'sabado':
+                newObject = {
+                  ...newObject,
+                  sabManha: d === 'manha' ? newObject.sabManha + 1 : newObject.sabManha,
+                  sabTarde: d === 'tarde' ? newObject.sabTarde + 1 : newObject.sabTarde,
+                  sabNoite: d === 'noite' ? newObject.sabNoite + 1 : newObject.sabNoite,
+                }
+                break;
+
+              default:
+                break;
+            }
+
+            return null
+          })
+        }
+        return null
+      })
+
+      console.log(newObject)
+      return newObject
+    })
+  }
+
+  const renderResults = () => {
+    const countList = registerCount() || DEFAULT_COUNT
+
+    console.log(countList)
+    return (
+      <StyledHome>
+        {registerCount()}
+        <StyledTable>
+          <div className="col">
+            <div className="row-title">
+              Segunda Feira
+            </div>
+            {Boolean(countList.segManha) && (
+              <p>Manhã: {countList.segManha}</p>
+            )}
+            {Boolean(countList.segTarde) && (
+              <p>Tarde: {countList.segTarde}</p>
+            )}
+            {Boolean(countList.segNoite) && (
+              <p>Noite: {countList.segNoite}</p>
+            )}
+          </div>
+          <div className="col">
+            <div className="row-title">
+              Terça Feira
+            </div>
+            {Boolean(countList.terManha) && (
+              <p>Manhã: {countList.terManha}</p>
+            )}
+            {Boolean(countList.terTarde) && (
+              <p>Tarde: {countList.terTarde}</p>
+            )}
+            {Boolean(countList.terNoite) && (
+              <p>Noite: {countList.terNoite}</p>
+            )}
+          </div>
+          <div className="col">
+            <div className="row-title">
+              Quarta Feira
+            </div>
+            {Boolean(countList.quaManha) && (
+              <p>Manhã: {countList.quaManha}</p>
+            )}
+            {Boolean(countList.quaTarde) && (
+              <p>Tarde: {countList.quaTarde}</p>
+            )}
+            {Boolean(countList.quaNoite) && (
+              <p>Noite: {countList.quaNoite}</p>
+            )}
+          </div>
+          <div className="col">
+            <div className="row-title">
+              Quinta Feira
+            </div>
+            {Boolean(countList.quiManha) && (
+              <p>Manhã: {countList.quiManha}</p>
+            )}
+            {Boolean(countList.quiTarde) && (
+              <p>Tarde: {countList.quiTarde}</p>
+            )}
+            {Boolean(countList.quiNoite) && (
+              <p>Noite: {countList.quiNoite}</p>
+            )}
+          </div>
+          <div className="col">
+            <div className="row-title">
+              Sexta Feira
+            </div>
+            {Boolean(countList.sexManha) && (
+              <p>Manhã: {countList.sexManha}</p>
+            )}
+            {Boolean(countList.sexTarde) && (
+              <p>Tarde: {countList.sexTarde}</p>
+            )}
+            {Boolean(countList.sexNoite) && (
+              <p>Noite: {countList.sexNoite}</p>
+            )}
+          </div>
+          <div className="col">
+            <div className="row-title">
+              Sábado
+            </div>
+            {Boolean(countList.sexManha) && (
+              <p>Manhã: {countList.sabManha}</p>
+            )}
+            {Boolean(countList.sabTarde) && (
+              <p>Tarde: {countList.sabTarde}</p>
+            )}
+            {Boolean(countList.sabNoite) && (
+              <p>Noite: {countList.sabNoite}</p>
+            )}
+          </div>
+        </StyledTable>
+
+        {nameList.map((item, index) => renderResident(item, index))}
+      </StyledHome>
+    )
+  }
 
   return (
     <div className="squad">
-      {console.log(countList)}
       {showModal && renderModal()}
       {showResults ? renderResults() : (
         <>

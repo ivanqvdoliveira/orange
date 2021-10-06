@@ -132,3 +132,8 @@ export const StyledResident = styled.div`
   margin-bottom: 20px;
   padding: 10px;
 `
+
+
+export const StyledTable = styled.div`
+  width: 100%;
+`
