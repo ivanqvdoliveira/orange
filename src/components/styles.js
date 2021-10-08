@@ -3,14 +3,20 @@ import styled from '@emotion/styled'
 export const StyledMenu = styled.nav`
   width: 100%;
   background-color: rgba(0, 0, 0, .7);
-  padding: 20px;
-  text-align: center;
+  padding: 20px 15px;
+  text-align: left;
   font-size: 20px;
   color: #fff;
+
+  span {
+    display: inline-block;
+    width: calc(100% - 130px);
+    vertical-align: middle;
+  }
 `
 
 export const StyledHome = styled.article`
-  padding: 0 20px;
+  padding: 20px;
   max-width: 500px;
   margin: 30px auto;
 
@@ -124,4 +130,56 @@ export const WarningMessage = styled.div`
   text-align: center;
   background-color: #ff9a9a;
   color: #7a0000;
+`
+
+export const StyledResident = styled.div`
+  display: block;
+  background-color: rgba(0, 0, 0, .1);
+  margin-bottom: 20px;
+  padding: 10px;
+
+  &:last-of-type {
+    margin-bottom: 50px;
+  }
+`
+
+
+export const StyledTable = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: calc(33.333333% - 2px) calc(33.333333% - 2px) calc(33.333333% - 2px);
+  grid-gap: 6px;
+  margin-bottom: 20px;
+
+  .col {
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10px;
+    position: relative;
+    text-align: center;
+    background-color: #eee;
+
+    .row-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+      border-bottom: 1px solid;
+    }
+
+    p {
+      margin-bottom: 5px;
+    }
+  }
+`
+
+export const StyledButton = styled.button`
+  display: inline-block;
+  width: 110px;
+  background-color: #becaff;
+  border: none;
+  height: 35px;
+  color: #2e2e2e;
+  font-weight: bold;
+  margin-left: 20px;
 `
