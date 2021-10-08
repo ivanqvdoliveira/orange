@@ -255,7 +255,11 @@ const Home = (props) => {
         <p>{item[day.value].notAllDay ? (
           <>
             <span>{day.name} - </span>
-            {item[day.value].period.map((d, index) => <span key={index}>{d}</span>)}
+            {item[day.value].period.map((d, index) => 
+              <span key={index}>
+                {d}{index >= (item[day.value].period.length - 1) ? '' : ', '}
+              </span>
+            )}
           </>
         ) : (
           <>
@@ -357,7 +361,68 @@ const Home = (props) => {
 
             return null
           })
+          return null
         }
+
+        switch (day.value) {
+          case 'segunda':
+            newObject = {
+              ...newObject,
+              segManha: newObject.segManha + 1,
+              segTarde: newObject.segTarde + 1,
+              segNoite: newObject.segNoite + 1,
+            }
+            break;
+
+          case 'terca':
+            newObject = {
+              ...newObject,
+              terManha: newObject.terManha + 1,
+              terTarde: newObject.terTarde + 1,
+              terNoite: newObject.terNoite + 1,
+            }
+            break;
+
+          case 'quarta':
+            newObject = {
+              ...newObject,
+              quaManha: newObject.quaManha + 1,
+              quaTarde: newObject.quaTarde + 1,
+              quaNoite: newObject.quaNoite + 1,
+            }
+            break;
+
+          case 'quinta':
+            newObject = {
+              ...newObject,
+              quiManha: newObject.quiManha + 1,
+              quiTarde: newObject.quiTarde + 1,
+              quiNoite: newObject.quiNoite + 1,
+            }
+            break;
+
+          case 'sexta':
+            newObject = {
+              ...newObject,
+              sexManha: newObject.sexManha + 1,
+              sexTarde: newObject.sexTarde + 1,
+              sexNoite: newObject.sexNoite + 1,
+            }
+            break;
+
+          case 'sabado':
+            newObject = {
+              ...newObject,
+              sabManha: newObject.sabManha + 1,
+              sabTarde: newObject.sabTarde + 1,
+              sabNoite: newObject.sabNoite + 1,
+            }
+            break;
+
+          default:
+            break;
+        }
+
         return null
       })
       return null
@@ -373,22 +438,16 @@ const Home = (props) => {
     return (
       <>
         <StyledHome>
-          <p>Resultados somados de escolha por dia + quem escolheu semana inteira</p>
+          <p>Resultados somados de escolha por dia + quem escolheu semana inteira (ou o dia todo)</p>
           <StyledTable>
             <div className="col">
               <div>
                 <div className="row-title">
                   Segunda Feira
                 </div>
-                {Boolean(countList.segManha) && (
-                  <p>Manhã: {countList.segManha + countList.allWeek}</p>
-                )}
-                {Boolean(countList.segTarde) && (
-                  <p>Tarde: {countList.segTarde + countList.allWeek}</p>
-                )}
-                {Boolean(countList.segNoite) && (
-                  <p>Noite: {countList.segNoite + countList.allWeek}</p>
-                )}
+                <p>Manhã: {countList.segManha + countList.allWeek}</p>
+                <p>Tarde: {countList.segTarde + countList.allWeek}</p>
+                <p>Noite: {countList.segNoite + countList.allWeek}</p>
               </div>
             </div>
             <div className="col">
@@ -396,15 +455,9 @@ const Home = (props) => {
                 <div className="row-title">
                   Terça Feira
                 </div>
-                {Boolean(countList.terManha) && (
-                  <p>Manhã: {countList.terManha + countList.allWeek}</p>
-                )}
-                {Boolean(countList.terTarde) && (
-                  <p>Tarde: {countList.terTarde + countList.allWeek}</p>
-                )}
-                {Boolean(countList.terNoite) && (
-                  <p>Noite: {countList.terNoite + countList.allWeek}</p>
-                )}
+                <p>Manhã: {countList.terManha + countList.allWeek}</p>
+                <p>Tarde: {countList.terTarde + countList.allWeek}</p>
+                <p>Noite: {countList.terNoite + countList.allWeek}</p>
               </div>
             </div>
             <div className="col">
@@ -412,15 +465,9 @@ const Home = (props) => {
                 <div className="row-title">
                   Quarta Feira
                 </div>
-                {Boolean(countList.quaManha) && (
-                  <p>Manhã: {countList.quaManha + countList.allWeek}</p>
-                )}
-                {Boolean(countList.quaTarde) && (
-                  <p>Tarde: {countList.quaTarde + countList.allWeek}</p>
-                )}
-                {Boolean(countList.quaNoite) && (
-                  <p>Noite: {countList.quaNoite + countList.allWeek}</p>
-                )}
+                <p>Manhã: {countList.quaManha + countList.allWeek}</p>
+                <p>Tarde: {countList.quaTarde + countList.allWeek}</p>
+                <p>Noite: {countList.quaNoite + countList.allWeek}</p>
               </div>
             </div>
             <div className="col">
@@ -428,15 +475,9 @@ const Home = (props) => {
                 <div className="row-title">
                   Quinta Feira
                 </div>
-                {Boolean(countList.quiManha) && (
-                  <p>Manhã: {countList.quiManha + countList.allWeek}</p>
-                )}
-                {Boolean(countList.quiTarde) && (
-                  <p>Tarde: {countList.quiTarde + countList.allWeek}</p>
-                )}
-                {Boolean(countList.quiNoite) && (
-                  <p>Noite: {countList.quiNoite + countList.allWeek}</p>
-                )}
+                <p>Manhã: {countList.quiManha + countList.allWeek}</p>
+                <p>Tarde: {countList.quiTarde + countList.allWeek}</p>
+                <p>Noite: {countList.quiNoite + countList.allWeek}</p>
               </div>
             </div>
             <div className="col">
@@ -444,15 +485,9 @@ const Home = (props) => {
                 <div className="row-title">
                   Sexta Feira
                 </div>
-                {Boolean(countList.sexManha) && (
-                  <p>Manhã: {countList.sexManha + countList.allWeek}</p>
-                )}
-                {Boolean(countList.sexTarde) && (
-                  <p>Tarde: {countList.sexTarde + countList.allWeek}</p>
-                )}
-                {Boolean(countList.sexNoite) && (
-                  <p>Noite: {countList.sexNoite + countList.allWeek}</p>
-                )}
+                <p>Manhã: {countList.sexManha + countList.allWeek}</p>
+                <p>Tarde: {countList.sexTarde + countList.allWeek}</p>
+                <p>Noite: {countList.sexNoite + countList.allWeek}</p>
               </div>
             </div>
             <div className="col">
@@ -460,15 +495,9 @@ const Home = (props) => {
                 <div className="row-title">
                   Sábado
                 </div>
-                {Boolean(countList.sexManha) && (
-                  <p>Manhã: {countList.sabManha + countList.allWeek}</p>
-                )}
-                {Boolean(countList.sabTarde) && (
-                  <p>Tarde: {countList.sabTarde + countList.allWeek}</p>
-                )}
-                {Boolean(countList.sabNoite) && (
-                  <p>Noite: {countList.sabNoite + countList.allWeek}</p>
-                )}
+                <p>Manhã: {countList.sabManha + countList.allWeek}</p>
+                <p>Tarde: {countList.sabTarde + countList.allWeek}</p>
+                <p>Noite: {countList.sabNoite + countList.allWeek}</p>
               </div>
             </div>
           </StyledTable>
