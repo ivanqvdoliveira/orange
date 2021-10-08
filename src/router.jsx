@@ -4,7 +4,7 @@ import Home from './components/home'
 import Menu from './components/menu'
 
 const DefaultRoute = () => {
-  const [showResults, setShowResults] = useState(false)
+  const [showResults, setShowResults] = useState(true)
 
   const handleClick = () => {
 
@@ -15,7 +15,7 @@ const DefaultRoute = () => {
   return (
     <Router>
       <div className='full-height'>
-        <Menu handleClick={handleClick} />
+        <Menu handleClick={handleClick} showResults={showResults} />
 
         <Route exact path="/" component={(props) => <Home {...props} showResults={showResults} />} />
       </div>

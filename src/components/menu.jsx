@@ -1,17 +1,19 @@
 import React from 'react';
-import { StyledMenu } from './styles'
+import { StyledMenu, StyledButton } from './styles'
 
 const Menu = (props) => {
-  const { handleClick } = props
+  const { handleClick, showResults } = props
   const onClickItem = () => {
     handleClick()
   }
 
   return (
     <StyledMenu>
-      Enquete Residencial Louvre
+      <span>Enquete Residencial Louvre</span>
 
-      <button onClick={() => onClickItem()}>ok</button>
+      <StyledButton onClick={() => onClickItem()}>
+        {showResults ? 'Formulário' : 'Ver resultados'}
+      </StyledButton>
     </StyledMenu>
   )
 }

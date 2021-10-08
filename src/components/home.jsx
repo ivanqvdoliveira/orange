@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import { APTOS, PERIOD, WEEK_DAYS } from '../constants/selectsFill'
 import { DEFAULT_VALUES, DEFAULT_COUNT } from '../constants/defaultValues'
 import firebaseConection from '../utils/firebase'
@@ -251,19 +251,21 @@ const Home = (props) => {
     if (!item[day.value].personalFlow) return
 
     return (
-      <>
-        <p key={index}>{item[day.value].notAllDay ? (
+      <span key={index}>
+        <p>{item[day.value].notAllDay ? (
           <>
-            <span>{day.name}</span>
+            <span>{day.name} - </span>
             {item[day.value].period.map((d, index) => <span key={index}>{d}</span>)}
           </>
         ) : (
           <>
-            <span>{day.name}</span>
-            <span>Qualquer período</span>
+            <span key={index}>
+              <span>{day.name} - </span>
+              <span>qualquer período</span>
+            </span>
           </>
         )}</p>
-      </>
+      </span>
     )
   }
 
@@ -272,11 +274,12 @@ const Home = (props) => {
       <p><b>{item.morador}</b> - apto {item.apartamento}</p>
       {item.allWeek ? (
         <>
-          <p>Disponível a semana inteira, qualquer horário.</p>
+          <p>Disponível a semana inteira, qualquer período.</p>
         </>
       ) : WEEK_DAYS.map((day, index) => renderPersonalWeek(day, index, item))}
     </StyledResident>
   )
+
   const registerCount = () => {
     let newObject = DEFAULT_COUNT
 
@@ -357,108 +360,124 @@ const Home = (props) => {
         }
         return null
       })
-
-      console.log(newObject)
-      return newObject
+      return null
     })
+    return newObject
   }
 
   const renderResults = () => {
-    const countList = registerCount() || DEFAULT_COUNT
+    const countList = registerCount()
 
-    console.log(countList)
+    if (!countList) return
+
     return (
-      <StyledHome>
-        {registerCount()}
-        <StyledTable>
-          <div className="col">
-            <div className="row-title">
-              Segunda Feira
+      <>
+        <StyledHome>
+          <p>Resultados somados de escolha por dia + quem escolheu semana inteira</p>
+          <StyledTable>
+            <div className="col">
+              <div>
+                <div className="row-title">
+                  Segunda Feira
+                </div>
+                {Boolean(countList.segManha) && (
+                  <p>Manhã: {countList.segManha + countList.allWeek}</p>
+                )}
+                {Boolean(countList.segTarde) && (
+                  <p>Tarde: {countList.segTarde + countList.allWeek}</p>
+                )}
+                {Boolean(countList.segNoite) && (
+                  <p>Noite: {countList.segNoite + countList.allWeek}</p>
+                )}
+              </div>
             </div>
-            {Boolean(countList.segManha) && (
-              <p>Manhã: {countList.segManha}</p>
-            )}
-            {Boolean(countList.segTarde) && (
-              <p>Tarde: {countList.segTarde}</p>
-            )}
-            {Boolean(countList.segNoite) && (
-              <p>Noite: {countList.segNoite}</p>
-            )}
-          </div>
-          <div className="col">
-            <div className="row-title">
-              Terça Feira
+            <div className="col">
+              <div>
+                <div className="row-title">
+                  Terça Feira
+                </div>
+                {Boolean(countList.terManha) && (
+                  <p>Manhã: {countList.terManha + countList.allWeek}</p>
+                )}
+                {Boolean(countList.terTarde) && (
+                  <p>Tarde: {countList.terTarde + countList.allWeek}</p>
+                )}
+                {Boolean(countList.terNoite) && (
+                  <p>Noite: {countList.terNoite + countList.allWeek}</p>
+                )}
+              </div>
             </div>
-            {Boolean(countList.terManha) && (
-              <p>Manhã: {countList.terManha}</p>
-            )}
-            {Boolean(countList.terTarde) && (
-              <p>Tarde: {countList.terTarde}</p>
-            )}
-            {Boolean(countList.terNoite) && (
-              <p>Noite: {countList.terNoite}</p>
-            )}
-          </div>
-          <div className="col">
-            <div className="row-title">
-              Quarta Feira
+            <div className="col">
+              <div>
+                <div className="row-title">
+                  Quarta Feira
+                </div>
+                {Boolean(countList.quaManha) && (
+                  <p>Manhã: {countList.quaManha + countList.allWeek}</p>
+                )}
+                {Boolean(countList.quaTarde) && (
+                  <p>Tarde: {countList.quaTarde + countList.allWeek}</p>
+                )}
+                {Boolean(countList.quaNoite) && (
+                  <p>Noite: {countList.quaNoite + countList.allWeek}</p>
+                )}
+              </div>
             </div>
-            {Boolean(countList.quaManha) && (
-              <p>Manhã: {countList.quaManha}</p>
-            )}
-            {Boolean(countList.quaTarde) && (
-              <p>Tarde: {countList.quaTarde}</p>
-            )}
-            {Boolean(countList.quaNoite) && (
-              <p>Noite: {countList.quaNoite}</p>
-            )}
-          </div>
-          <div className="col">
-            <div className="row-title">
-              Quinta Feira
+            <div className="col">
+              <div>
+                <div className="row-title">
+                  Quinta Feira
+                </div>
+                {Boolean(countList.quiManha) && (
+                  <p>Manhã: {countList.quiManha + countList.allWeek}</p>
+                )}
+                {Boolean(countList.quiTarde) && (
+                  <p>Tarde: {countList.quiTarde + countList.allWeek}</p>
+                )}
+                {Boolean(countList.quiNoite) && (
+                  <p>Noite: {countList.quiNoite + countList.allWeek}</p>
+                )}
+              </div>
             </div>
-            {Boolean(countList.quiManha) && (
-              <p>Manhã: {countList.quiManha}</p>
-            )}
-            {Boolean(countList.quiTarde) && (
-              <p>Tarde: {countList.quiTarde}</p>
-            )}
-            {Boolean(countList.quiNoite) && (
-              <p>Noite: {countList.quiNoite}</p>
-            )}
-          </div>
-          <div className="col">
-            <div className="row-title">
-              Sexta Feira
+            <div className="col">
+              <div>
+                <div className="row-title">
+                  Sexta Feira
+                </div>
+                {Boolean(countList.sexManha) && (
+                  <p>Manhã: {countList.sexManha + countList.allWeek}</p>
+                )}
+                {Boolean(countList.sexTarde) && (
+                  <p>Tarde: {countList.sexTarde + countList.allWeek}</p>
+                )}
+                {Boolean(countList.sexNoite) && (
+                  <p>Noite: {countList.sexNoite + countList.allWeek}</p>
+                )}
+              </div>
             </div>
-            {Boolean(countList.sexManha) && (
-              <p>Manhã: {countList.sexManha}</p>
-            )}
-            {Boolean(countList.sexTarde) && (
-              <p>Tarde: {countList.sexTarde}</p>
-            )}
-            {Boolean(countList.sexNoite) && (
-              <p>Noite: {countList.sexNoite}</p>
-            )}
-          </div>
-          <div className="col">
-            <div className="row-title">
-              Sábado
+            <div className="col">
+              <div>
+                <div className="row-title">
+                  Sábado
+                </div>
+                {Boolean(countList.sexManha) && (
+                  <p>Manhã: {countList.sabManha + countList.allWeek}</p>
+                )}
+                {Boolean(countList.sabTarde) && (
+                  <p>Tarde: {countList.sabTarde + countList.allWeek}</p>
+                )}
+                {Boolean(countList.sabNoite) && (
+                  <p>Noite: {countList.sabNoite + countList.allWeek}</p>
+                )}
+              </div>
             </div>
-            {Boolean(countList.sexManha) && (
-              <p>Manhã: {countList.sabManha}</p>
-            )}
-            {Boolean(countList.sabTarde) && (
-              <p>Tarde: {countList.sabTarde}</p>
-            )}
-            {Boolean(countList.sabNoite) && (
-              <p>Noite: {countList.sabNoite}</p>
-            )}
-          </div>
-        </StyledTable>
+          </StyledTable>
 
-        {nameList.map((item, index) => renderResident(item, index))}
-      </StyledHome>
+          {nameList.map((item, index) => renderResident(item, index))}
+          <span className="clear" />
+        </StyledHome>
+        <span className="clear" />
+      </>
     )
   }
 
