@@ -296,6 +296,7 @@ span.space{
       display: inline-block;
       margin: 1rem 0;
       padding: 10px 20px;
+      width: 100%;
     }
 
 .button i {
@@ -392,9 +393,7 @@ span.space{
 
 .format-style button, .format-style input.button {
     padding:10px 20px;
-    width:inherit;
     text-transform:uppercase;
-    margin:0 5px;
     border: 1px solid rgba(255,255,255,0.4);
     cursor:pointer;
     outline:none;
@@ -586,7 +585,7 @@ span.space{
     box-shadow: 10px 10px 10px rgba(0, 0, 0, .3);
     border-radius: 5px;
     display: block;
-    padding: 20px;
+    padding: 37px 20px 20px;
     position: fixed;
     top: calc(50% - 40%);
     left:  calc(50% - 35%);
