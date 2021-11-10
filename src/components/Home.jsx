@@ -5,7 +5,7 @@ const Home = () => {
 
   return (
     <StyledList className="squad align-center">
-      <p className="home-text">Olá vizinhos. Para dar segmento no AVCB do condomínio, é obrigatório, para o número de apartamentos, que tenhamos algumas pessoas treinada para ser brigadista, caso um dia seja necessário até a chegada dos bombeiros. Precisamos de  no mínimo 4 voluntários, mas não existe um número máximo, se todos quiserem, melhor ainda. Mas que seja de 4 apartamentos diferente, só para não acontecer de ter em apenas um apartamento 3 pessoas, e quando precisarmos, eles estão fora de casa :)</p>
+      <p className="home-text">Olá vizinhos. Para dar segmento no AVCB do condomínio, é obrigatório, para o número de apartamentos, que tenhamos algumas pessoas treinadas para serem brigadistas, caso um dia seja necessário essas habilidades até a chegada dos bombeiros. Precisamos de  no mínimo 4 voluntários, e não existe um número máximo, se todos quiserem, melhor ainda. Mas que seja de 4 apartamentos diferente, só para não acontecer de ter em apenas um apartamento 3 pessoas, e quando precisarmos, eles estão fora de casa :)</p>
 
       <p className="home-text">É um curso de 2 horas, que será agendado para os interessados, vamos aprender a usar os equipamentos e também como agir num momento que seja preciso. Para saber mais sobre a necessidade desse treinamento, segue abaixo uma reportagem atualizada. E também o botão para se voluntariar. Fico no aguardo.</p>
 
