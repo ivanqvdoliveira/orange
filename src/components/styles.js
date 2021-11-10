@@ -183,3 +183,92 @@ export const StyledButton = styled.button`
   font-weight: bold;
   margin-left: 20px;
 `
+
+
+export const StyledForm = styled.div`
+  padding: 10px 10px 100px;
+  color: #666;
+
+  &.format-style {
+    h5 {
+      line-height: 33px;
+      text-align: center;
+      margin-bottom: 50px;
+    }
+  }
+
+  label {
+    margin-bottom: 30px;
+
+    b {
+      font-size: 18px;
+    }
+
+    input {
+      height: 40px;
+      padding: 10px;
+    }
+
+    select {
+      background-color: transparent;
+      padding: 10px;
+      height: 40px;
+    }
+  }
+`
+
+export const StyledList = styled.div`
+  padding: 10px 10px 100px;
+  color: #666;
+
+  h5 {
+    line-height: 33px;
+    margin-bottom: 50px;
+  }
+
+  p {
+    &.home-text {
+      color: #333;
+      font-size: 18px;
+      margin-bottom: 20px;
+      margin-top: 10px;
+    }
+  }
+`
+
+export const StyledBox = styled.div`
+  background-color: #eee;
+  margin-bottom: 20px;
+  padding: 20px;
+
+  p {
+    margin: 0 0 10px;
+    width: calc(50% - 10px);
+    display: inline-block;
+
+    &:nth-of-type(odd) {
+      margin-left: 20px;
+    }
+
+    &.nome {
+      font-size: 17px;
+      font-weight: bold;
+      text-transform: uppercase;
+      width: 100%;
+      margin-left: 0;
+      margin-bottom: 20px;
+    }
+
+    span {
+      font-weight: bold;
+      margin-right: 10px;
+      color: #333;
+    }
+
+    i {
+      font-size: 20px;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+  }
+`
