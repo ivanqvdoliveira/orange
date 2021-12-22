@@ -1,33 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Home from './components/Home'
+import Header from './components/Header'
 import Menu from './components/Menu'
-import Enquete from './components/Enquete'
-import Formulario from './components/Formulario'
+import Contact from './components/Contact'
+import Exemples from './components/Examples'
 
-const DefaultRoute = () => {
-  const [showResults, setShowResults] = useState(true)
+const defaultRoute = () => (
+  <Router>
+    <div>
+      <Header />
+      <Menu />
 
-  const handleClick = () => {
+      <hr/>
 
-    setShowResults(!showResults)
-  }
+      <Route exact path="/" component={Home}/>
+      <Route path="/contact" component={Contact}/>
+      <Route path="/exemples" component={Exemples}/>
+    </div>
+  </Router>
+)
 
-  const { pathname } = window.location
-  const url = pathname.split('/')
+export default defaultRoute
 
-  return (
-    <Router>
-      <div className='full-height'>
-        <Menu handleClick={handleClick} showResults={showResults} url={url[1]} />
-
-        <Route exact path="/" component={() => <Home />} />
-        <Route exact path="/enquete" component={(props) => <Enquete {...props} showResults={showResults} />} />
-        <Route exact path="/formulario" component={(props) => <Formulario />} />
-      </div>
-    </Router>
-  )
-}
-
-export default DefaultRoute
 
