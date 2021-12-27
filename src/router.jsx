@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import styled from '@emotion/styled'
 import Home from './components/Home'
 import Header from './components/Header'
 import Menu from './components/Menu'
@@ -9,8 +10,9 @@ import Exemples from './components/Examples'
 const defaultRoute = () => (
   <Router>
     <div>
-      <Header />
       <Menu />
+
+      <Header />
 
       <hr/>
 

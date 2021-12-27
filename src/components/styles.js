@@ -1,18 +1,21 @@
 import styled from '@emotion/styled'
 
 export const StyledMenu = styled.nav`
-  width: 100%;
-  background-color: rgba(0, 0, 0, .7);
+  width: 240px;
   padding: 20px 15px;
+  background-color: brown;
   text-align: left;
-  font-size: 20px;
-  color: #fff;
+  position: fixed;
+  top: 10px;
+  bottom: 10px;
+  left: 10px;
+`
 
-  span {
-    display: inline-block;
-    width: calc(100% - 130px);
-    vertical-align: middle;
-  }
+export const ImageLogo = styled.img`
+  filter: brightness(0) invert(1);
+  max-height: 30px;
+  margin: 0 auto 40px;
+  display: block;
 `
 
 export const StyledHome = styled.article`

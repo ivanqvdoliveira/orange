@@ -1,9 +1,9 @@
 :root {
-  --color-default-222: #222;
-  --color-default-b1: #b5b5b5;
-  --color-default-333: #333;
-  --color-default-FFF: rgba(255, 255, 255, 1);
-  --comum-color: #666;
+  --color-default-primary: #ec9453;
+  --color-default-secondary: #333;
+  --color-default-light-gray: #b5b5b5;
+  --color-default-white: rgba(255, 255, 255, 1);
+  --color-default-gray-dark: #666;
 }
 
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6,
@@ -34,12 +34,13 @@ html {
   height: 100%;
 
   body {
-    background: var(--color-default-FFF);
-    color: var(--color-default-222);
-    font-family: 'Josefin Sans', sans-serif;
+    color: var(--color-default-secondary);
+    background-color: var(--color-default-primary);
+    font-family: 'Roboto', sans-serif;
     font-size: 100.01%;
     height: 100%;
     line-height: 1;
+    padding: 10px;
     text-size-adjust: 100%;
   } /* end body */
 } /* end html */
@@ -72,7 +73,7 @@ html {
 
     a, a:visited, a:active, a:focus {
       text-decoration: none;
-      color:var(--color-default-333);
+      color:var(--color-default-secondary);
       outline:none;
     }
 
@@ -90,22 +91,20 @@ html {
 
     input {
       &::-webkit-input-placeholder {
-        color:var(--color-default-b1);
-      }
+        color:var(--color-default-light-gray)white     }
 
       &:-moz-placeholder {
-        color:var(--color-default-b1);
-        opacity:1;
+        color:var(--color-default-light-gray);
+        owhiteity:1;
       }
 
       &::-moz-placeholder {
-        color:var(--color-default-b1);
-        opacity:1;
+        color:var(--color-default-light-gray);
+        owhiteity:1;
       }
 
       &:-ms-input-placeholder {
-        color:var(--color-default-b1);
-      }
+        color:var(--color-default-light-gray)white     }
 
       &[type='radio'],
       &[type='checkbox'] {
@@ -121,22 +120,20 @@ html {
       width:100%;
 
       &::-webkit-input-placeholder {
-        color:var(--color-default-b1);
-      }
+        color:var(--color-default-light-gray)white     }
 
       &:-moz-placeholder {
-        color:var(--color-default-b1);
-        opacity:1;
+        color:var(--color-default-light-gray);
+        owhiteity:1;
       }
 
       &::-moz-placeholder {
-        color:var(--color-default-b1);
-        opacity:1;
+        color:var(--color-default-light-gray);
+        owhiteity:1;
       }
 
       &:-ms-input-placeholder {
-        color:var(--color-default-b1);
-      }
+        color:var(--color-default-light-gray)white     }
     }
 
     select{
@@ -146,22 +143,20 @@ html {
       text-overflow: '';
 
       &::-webkit-input-placeholder {
-        color:var(--color-default-b1);
-      }
+        color:var(--color-default-light-gray)white     }
 
       &:-moz-placeholder {
-        color:var(--color-default-b1);
-        opacity:1;
+        color:var(--color-default-light-gray);
+        owhiteity:1;
       }
 
       &::-moz-placeholder {
-        color:var(--color-default-b1);
-        opacity:1;
+        color:var(--color-default-light-gray);
+        owhiteity:1;
       }
 
       &:-ms-input-placeholder {
-        color:var(--color-default-b1);
-      }
+        color:var(--color-default-light-gray)white     }
 
       &::-ms-expand {
         display: none;
@@ -198,7 +193,7 @@ html {
     }
 
     ::selection {
-      background: var(--color-default-333);
+      background: var(--color-default-secondary);
       color: #eee;
     }
 
@@ -247,7 +242,7 @@ html {
     }
 
     .comum-color{
-      color: var(--comum-color);
+      color: var(--color-default-gray-dark);
       text-shadow: 0 0 1px rgba(0,0,0, 0.2);
     }
 
@@ -278,10 +273,10 @@ html {
     }
 
     .button {
-      background: var(--color-default-222);
+      background: var(--color-default-primary);
       border: none;
-      color: var(--color-default-FFF);
-      font-family: 'Open Sans', sans-serif;
+      color: var(--color-default-white);
+      font-family: 'Roboto', sans-serif;
       font-size: 20px;
       display: inline-block;
       margin: 1rem 0;
@@ -297,7 +292,7 @@ html {
   h1, h2, h3, h4, h5, h6 {
     line-height: 70px;
     font-weight:bold;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
   }
 
   h1 {
@@ -330,7 +325,7 @@ html {
 
   a {
     text-decoration:underline;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: bold;
   }
 
@@ -344,7 +339,7 @@ html {
     font-size: 18px;
     line-height: 25px;
     font-weight:bold;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
   }
 
   ul, ol {
@@ -408,7 +403,7 @@ html {
 
     th {
       text-transform:uppercase;
-      font-family: 'Open Sans', sans-serif;
+      font-family: 'Roboto', sans-serif;
       text-align:left;
     }
   }
@@ -435,7 +430,7 @@ html {
     color: #D7D6D6;
     font-weight: bold;
     font-style: italic;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
     text-shadow: 4px 4px rgba(197, 197, 197, 0.07);
 
     &:before{
@@ -471,7 +466,7 @@ html {
   }
 
   strong {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: bold;
   }
 } /* end format-style */
