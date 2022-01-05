@@ -2,20 +2,133 @@ import styled from '@emotion/styled'
 
 export const StyledMenu = styled.nav`
   width: 240px;
-  padding: 20px 15px;
-  background-color: brown;
+  padding: 20px 10px;
+  background-color: var(--color-default-primary);
   text-align: left;
   position: fixed;
-  top: 10px;
-  bottom: 10px;
-  left: 10px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+
+  i {
+    &.fa-times-circle {
+      font-size: 30px;
+      color: #fff;
+      display: inline-block;
+      vertical-align: top;
+      cursor: pointer;
+  
+      @media (min-width: 840px) {
+        display: none;
+      }
+    }
+  }
+
+  ul {
+    li {
+      display: block;
+      margin: 0 0 3px;
+
+      a {
+        padding: 0 25px;
+        color: #fff;
+        display: block;
+        width: 100%;
+        position: relative;
+        height: 46px;
+        line-height: 46px;
+
+        i {
+          margin-right: 10px;
+        }
+
+        &:hover {
+          background-color: #fff;
+          color: #333;
+          border-radius: 15px;
+          z-index: 10;
+        }
+
+        &.active {
+          background-color: #fff;
+          color: #333;
+          border-radius: 15px;
+
+          i {
+            color: var(--color-default-primary);
+          }
+
+          &.desktop-menu {
+            border-radius: 15px 0 0 15px;
+
+            span {
+              &.barBG {
+                width: 20px;
+                height: 86px;
+                background-color: #fff;
+                top: -20px;
+                right: -10px;
+                position: absolute;
+                overflow: hidden;
+
+                &:before,
+                &:after {
+                  display: block;
+                  content: '';
+                  background-color: var(--color-default-primary);
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 50%;
+                  position: absolute;
+                  left: -20px;
+                }
+
+                &:before {
+                  top: -20px;
+                }
+
+                &:after {
+                  bottom: -20px;
+                }
+              }
+            }
+          }
+        }
+
+        span {
+          display: block;
+          width: 100%;
+        }
+      }
+    }
+  }
 `
 
 export const ImageLogo = styled.img`
   filter: brightness(0) invert(1);
   max-height: 30px;
-  margin: 0 auto 40px;
-  display: block;
+  display: inline-block;
+  margin: 0 0 15px 40px;
+  
+  @media (min-width: 840px) {
+    margin: 0 auto 15px;
+    display: block;
+  }
+`
+
+export const CustomButton = styled.button`
+  background-color: var(--color-default-primary);
+  border: none;
+  color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 5px;
+  font-size: 25px;
+  width: 50px;
+  height: 50px;
 `
 
 export const StyledHome = styled.article`
@@ -272,6 +385,49 @@ export const StyledBox = styled.div`
       font-size: 20px;
       vertical-align: middle;
       margin-right: 10px;
+    }
+  }
+`
+
+export const CustomHeader = styled.header`
+  width: 100%;
+  text-align: right;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+
+  & > div {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    display: inline-block;
+    margin-left: 13px;
+    vertical-align: top;
+
+    &.avatar {
+      background-color: #eee;
+      color: #777;
+      font-size: 20px;
+      border-radius: 50%;
+    }
+
+    &.alert {
+      font-size: 24px;
+      position: relative;
+
+      span {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: red;
+        display: block;
+        line-height: 20px;
+        font-size: 15px;
+        position: absolute;
+        top: -3px;
+        right: -3px;
+        color: #fff;
+      }
     }
   }
 `

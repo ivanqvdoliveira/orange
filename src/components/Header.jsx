@@ -1,14 +1,17 @@
-import React from 'react';
-import logo from '../img/logo.svg'
+import React from 'react'
+import { CustomHeader } from './styles'
 
 const Header = () => {
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <h1 className='App-title'>Base React - Ivan Oliveira</h1>
-      </header>
-    </div>
+    <CustomHeader>
+      <div className='alert'>
+        <span>2</span>
+        <i className="fas fa-bell" />
+      </div>
+      <div className='avatar'>
+        BD
+      </div>
+    </CustomHeader>
   )
 }
 
