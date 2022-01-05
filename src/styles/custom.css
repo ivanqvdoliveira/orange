@@ -29,20 +29,9 @@
 
 nav {
   ul {
-    text-align: center;
-
     li {
       display: inline-block;
       margin: 10px 10px 2px;
-
-      a {
-        background-color: #222;
-        color: #eee !important;
-        display: block;
-        width: 100%;
-        height: 100%;
-        padding: 10px 20px;
-      }
     }
   }
 }
