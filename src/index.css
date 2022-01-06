@@ -78,18 +78,25 @@ input, textarea, select {
       width: 100%;
       outline: none;
     }
+input {
+      height: 32px;
+      margin: 0 0 5px;
+      border: 1px solid #b3b3b3
+    }
 input::-webkit-input-placeholder {
-        color:var(--color-default-light-gray)white     }
+        color:var(--color-default-light-gray);
+      }
 input:-moz-placeholder {
         color:var(--color-default-light-gray);
-        owhiteity:1;
+        opacity:1;
       }
 input::-moz-placeholder {
         color:var(--color-default-light-gray);
-        owhiteity:1;
+        opacity:1;
       }
 input:-ms-input-placeholder {
-        color:var(--color-default-light-gray)white     }
+        color:var(--color-default-light-gray);
+      }
 input[type='radio'],
       input[type='checkbox'] {
         width: auto;
@@ -102,17 +109,19 @@ textarea {
       width:100%
     }
 textarea::-webkit-input-placeholder {
-        color:var(--color-default-light-gray)white     }
+        color:var(--color-default-light-gray);
+      }
 textarea:-moz-placeholder {
         color:var(--color-default-light-gray);
-        owhiteity:1;
+        opacity:1;
       }
 textarea::-moz-placeholder {
         color:var(--color-default-light-gray);
-        owhiteity:1;
+        opacity:1;
       }
 textarea:-ms-input-placeholder {
-        color:var(--color-default-light-gray)white     }
+        color:var(--color-default-light-gray);
+      }
 select{
       cursor: pointer;
       -webkit-appearance: none;
@@ -121,17 +130,19 @@ select{
       text-overflow: ''
     }
 select::-webkit-input-placeholder {
-        color:var(--color-default-light-gray)white     }
+        color:var(--color-default-light-gray);
+      }
 select:-moz-placeholder {
         color:var(--color-default-light-gray);
-        owhiteity:1;
+        opacity:1;
       }
 select::-moz-placeholder {
         color:var(--color-default-light-gray);
-        owhiteity:1;
+        opacity:1;
       }
 select:-ms-input-placeholder {
-        color:var(--color-default-light-gray)white     }
+        color:var(--color-default-light-gray);
+      }
 select::-ms-expand {
         display: none;
       }
@@ -496,7 +507,7 @@ span.space{
       background-color: var(--color-default-222);
       height: 150px;
       padding: 20px;
-      color: white;
+      color: #fff;
     }
 .App-title {
       font-size: 1.5em;

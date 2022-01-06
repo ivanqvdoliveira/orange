@@ -431,3 +431,60 @@ export const CustomHeader = styled.header`
     }
   }
 `
+
+export const CustomTitle = styled.p`
+  font-size: 30px;
+  text-align: center;
+  font-weight: bold;
+  margin: 20px 0;
+`
+
+export const StyledSearch = styled.div`
+  width: 240px;
+  display: inline-block;
+  vertical-align: top;
+
+  input {
+    width: calc(100% - 30px);
+    display: inline-block;
+    vertical-align: top;
+    padding: 0 10px;
+  }
+
+  i {
+    width: 20px;
+    height: 32px;
+    margin-top: 3px;
+    margin-left: 9px;
+    font-size: 25px;
+    cursor: pointer;
+    color: var(--color-default-primary);
+  }
+`
+
+export const StyledButtonAdd = styled.button`
+  width: 180px;
+  vertical-align: top;
+  display: inline-block;
+  margin-left: 30px;
+  height: 32px;
+  background-color: var(--color-default-primary);
+  border: none;
+  color: #fff;
+  position: relative;
+  line-height: 32px;
+  font-size: 20px;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 0 20px;
+
+  i {
+    border: 1px solid #fff;
+    border-radius: 50%;
+    padding: 3px;
+    color: #fff;
+    float: right;
+    font-size: 15px;
+    margin-top: 5px;
+  }
+`

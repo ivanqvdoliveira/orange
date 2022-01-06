@@ -96,21 +96,27 @@ html {
     }
 
     input {
+      height: 32px;
+      margin: 0 0 5px;
+      border: 1px solid #b3b3b3;
+
       &::-webkit-input-placeholder {
-        color:var(--color-default-light-gray)white     }
+        color:var(--color-default-light-gray);
+      }
 
       &:-moz-placeholder {
         color:var(--color-default-light-gray);
-        owhiteity:1;
+        opacity:1;
       }
 
       &::-moz-placeholder {
         color:var(--color-default-light-gray);
-        owhiteity:1;
+        opacity:1;
       }
 
       &:-ms-input-placeholder {
-        color:var(--color-default-light-gray)white     }
+        color:var(--color-default-light-gray);
+      }
 
       &[type='radio'],
       &[type='checkbox'] {
@@ -126,20 +132,22 @@ html {
       width:100%;
 
       &::-webkit-input-placeholder {
-        color:var(--color-default-light-gray)white     }
+        color:var(--color-default-light-gray);
+      }
 
       &:-moz-placeholder {
         color:var(--color-default-light-gray);
-        owhiteity:1;
+        opacity:1;
       }
 
       &::-moz-placeholder {
         color:var(--color-default-light-gray);
-        owhiteity:1;
+        opacity:1;
       }
 
       &:-ms-input-placeholder {
-        color:var(--color-default-light-gray)white     }
+        color:var(--color-default-light-gray);
+      }
     }
 
     select{
@@ -149,20 +157,22 @@ html {
       text-overflow: '';
 
       &::-webkit-input-placeholder {
-        color:var(--color-default-light-gray)white     }
+        color:var(--color-default-light-gray);
+      }
 
       &:-moz-placeholder {
         color:var(--color-default-light-gray);
-        owhiteity:1;
+        opacity:1;
       }
 
       &::-moz-placeholder {
         color:var(--color-default-light-gray);
-        owhiteity:1;
+        opacity:1;
       }
 
       &:-ms-input-placeholder {
-        color:var(--color-default-light-gray)white     }
+        color:var(--color-default-light-gray);
+      }
 
       &::-ms-expand {
         display: none;
