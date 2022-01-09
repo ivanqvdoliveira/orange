@@ -43,7 +43,11 @@ const DefaultRoute = () => {
       >
         <Header />
 
-        <Route exact path="/" component={Home}/>
+        <Route
+          exact
+          path="/"
+          component={() => <Home isMobile={isMobile} /> }
+        />
         <Route path="/dashboard" component={Dashboard}/>
         <Route path="/administration" component={Administration}/>
         <Route path="/tools" component={Tools}/>
