@@ -508,14 +508,3 @@ export const StyledButtonAdd = styled.button`
     text-align: center;
   }
 `
-
-export const CustomModal = styled.div`
-  h4 {
-    margin-bottom: 10px;
-  }
-
-  button {
-    margin-top: 20px;
-    margin-bottom: 0 !important;
-  }
-`

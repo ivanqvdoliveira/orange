@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import RegisterClient from './table/RegisterClient'
 import { getItemsList, AddNewItem, RequestUpdateItem } from '../utils/requests'
-import Modal from '../utils/Modal'
+import DefaultModalSubmit from  '../utils/modalTypes/DefaultModalSubmit'
+import DefaultModalAlert from  '../utils/modalTypes/DefaultModalAlert'
 import  {
   CustomTitle,
   StyledSearch,
   StyledButtonAdd,
-  CustomModal,
 } from './styles'
 
-const setupModal = {
-  status: false,
-  success: true,
+const OPTIONS = {
+  msgRegisterSuccess: 'Cadastro realizado com sucesso',
+  msgRegisterError: 'Opa, ocorreu um erro, tente novamente.',
+  msgFillName: 'Digite o nome do cliente',
+  msgEditName: 'Altere o nome do cliente'
 }
 
 const Home = (props) => {
@@ -20,9 +22,8 @@ const Home = (props) => {
   const [fullList, setFullList] = useState([])
   const [listToShow, setListToShow] = useState([])
   const [showModal, setShowModal] = useState(false)
-  const [showEditModal, setShowEditModal] = useState(false)
   const [toEdit, setToEdit] = useState({})
-  const [modalTypeDefault, setModalTypeDefault] = useState(setupModal)
+  const [modalType, setModalType] = useState('')
   const [form, setForm] = useState({})
 
   useEffect(() => {
@@ -31,26 +32,33 @@ const Home = (props) => {
 
   const closeModal = () => {
     setShowModal(false)
-    setModalTypeDefault(setupModal)
-    setShowEditModal(false)
+    setModalType('')
   }
 
   const onSuccess = () => {
-    setModalTypeDefault({
-      status: true,
-      success: true,
-    })
-    setForm({})
+    setModalType('success')
     setShowModal(true)
-    setShowEditModal(false)
+    setForm({})
   }
 
-  const onError = () => (
-    setModalTypeDefault({
-      status: true,
-      success: false,
+  const onError = () => {
+    setModalType('error')
+    setShowModal(true)
+  }
+
+  const onNewContactClick = () => {
+    setModalType('new-client')
+    setShowModal(true)
+  }
+
+  const onEditNameClick = (id, nome) => {
+    setModalType('edit-client')
+    setShowModal(true)
+    setToEdit({
+      nome,
+      id
     })
-  )
+  }
 
   const onSendClick = () => (
     AddNewItem({nome: form.nome}, onSuccess, onError)
@@ -80,46 +88,46 @@ const Home = (props) => {
     setToEdit(newForm)
   }
 
-  const renderNeWClientModal = () => (
-    <Modal closeModal={closeModal}>
-      <CustomModal>
-        <h4>Digite o nome do cliente</h4>
-        <input
-          className="input"
-          type="text"
-          name="nome"
-          value={form.nome}
-          onChange={onFormChange}
+  const renderModal = () => {
+    switch (modalType) {
+      case 'success':
+        return <DefaultModalAlert
+          closeModal={closeModal}
+          msg={OPTIONS.msgRegisterSuccess}
         />
-        <button
-          className="button"
-          onClick={onSendClick}
-        >
-          Enviar
-        </button>
-      </CustomModal>
-    </Modal>
-  )
 
-  const onNewContactClick = () => (
-    setShowModal(true)
-  )
+      case 'error':
+        return <DefaultModalAlert
+        closeModal={closeModal}
+        msg={OPTIONS.msgRegisterError}
+      />
 
-  const renderModal = () => (
-    <Modal closeModal={closeModal}>
-      <CustomModal>
-        <h4>
-          {modalTypeDefault.success ? 'Cadastro realizado com sucesso': 'opa, ocorreu um erro, tente novamente.'}
-        </h4>
-        <button
-          className="button"
-          onClick={closeModal}
-        >
-          Ok
-        </button>
-      </CustomModal>
-    </Modal>
-  )
+      case 'new-client':
+        return <DefaultModalSubmit
+          closeModal={closeModal}
+          msg={OPTIONS.msgFillName}
+          onChange={onFormChange}
+          value={form.nome}
+          onSubmit={onSendClick}
+          name='nome'
+          buttonLabel='Enviar'
+        />
+
+      case 'edit-client':
+        return <DefaultModalSubmit
+          closeModal={closeModal}
+          msg={OPTIONS.msgEditName}
+          onChange={onEditFormChange}
+          value={toEdit.nome}
+          onSubmit={handleSubmit}
+          name='nome'
+          buttonLabel='Salvar'
+        />
+
+      default:
+        return null
+    }
+  }
 
   const onSearchClick = () => {
     const newList = [...fullList]
@@ -130,48 +138,14 @@ const Home = (props) => {
     setListToShow(results)
   }
 
-  const handleChangeSubmit = () => {
+  const handleSubmit = () => {
     const { id, nome} = toEdit
     RequestUpdateItem(id, { nome }, onSuccess)
   }
 
-  const renderEditModal = () => (
-    <Modal closeModal={closeModal}>
-      <CustomModal>
-        <h4>Altere o nome do cliente</h4>
-        <input
-          className="input"
-          type="text"
-          name="nome"
-          value={toEdit.nome}
-          onChange={onEditFormChange}
-        />
-        <button
-          className="button"
-          onClick={handleChangeSubmit}
-        >
-          Salvar
-        </button>
-      </CustomModal>
-    </Modal>
-  )
-
-  const onEditNameClick = (id, nome) => {
-    setShowEditModal(true)
-    setToEdit({
-      nome,
-      id
-    })
-  }
-
   return (
     <>
-      {showModal && (
-        modalTypeDefault.status? renderModal() : renderNeWClientModal()
-      )}
-      {showEditModal && (
-        renderEditModal()
-      )}
+      {showModal && renderModal()}
       <CustomTitle>
         CRUD Exemplo
       </CustomTitle>
