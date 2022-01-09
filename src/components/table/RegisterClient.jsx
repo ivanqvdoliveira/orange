@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { RequestDelete } from '../../utils/requests'
-import Modal from '../../utils/Modal'
+import DefaultModalConfirm from '../../utils/modalTypes/DefaultModalConfirm'
+import DefaultModalAlert from  '../../utils/modalTypes/DefaultModalAlert'
 import {
   TableContainer,
   RowTable,
@@ -29,7 +30,7 @@ const RegisterClient = (props) => {
 
   const onRemoveItemClick = (id) => {
     setShowModal(true)
-    setModalType('remove-question')
+    setModalType('')
     setItemToDelete(id)
   }
 
@@ -42,7 +43,9 @@ const RegisterClient = (props) => {
               ID
             </span>
           )}
-          <p onClick={() => onEditNameClick(item.id, item.nome)}>{item.index}</p>
+          <p onClick={() => onEditNameClick(item.id, item.nome)}>
+            {item.index}
+          </p>
         </ColTable>
         <ColTable>
           {isMobile && (
@@ -50,7 +53,9 @@ const RegisterClient = (props) => {
               Nome
             </span>
           )}
-          <p onClick={() => onEditNameClick(item.id, item.nome)}>{item.nome}</p>
+          <p onClick={() => onEditNameClick(item.id, item.nome)}>
+            {item.nome}
+          </p>
         </ColTable>
         <ColTable>
           <i onClick={() => onRemoveItemClick(item.id)} className="far fa-trash-alt" />
@@ -92,32 +97,19 @@ const RegisterClient = (props) => {
   }
 
   const renderModal = () => {
-    let MSG = 'Deseja mesmo remover o item?'
-    let buttonsConfirm = true
-
     if (modalType === 'remove-success') {
-      MSG = 'Nome removido com sucesso.'
-      buttonsConfirm = false
+      return <DefaultModalAlert
+        closeModal={onCloseModal}
+        msg='Nome removido com sucesso.'
+      />
     }
 
     return (
-      <Modal closeModal={onCloseModal}>
-        <p>{MSG}</p>
-        {buttonsConfirm ? (
-          <>
-            <button className='button' onClick={onCloseModal}>
-              Não
-            </button>
-            <button className='button' onClick={confirmRemoveItem}>
-              Sim
-            </button>
-          </>
-        ): (
-          <button className='button' onClick={onCloseModal}>
-            Ok
-          </button>
-        )}
-      </Modal>
+      <DefaultModalConfirm
+        msg='Deseja mesmo remover o item?'
+        closeModal={onCloseModal}
+        callBack={confirmRemoveItem}
+      />
     )
   }
 
@@ -130,11 +122,17 @@ const RegisterClient = (props) => {
           <HeaderTable>
             <ColTable>
               ID
-              <i onClick={() => onSortClick('id')} className="fas fa-sort" />
+              <i
+                onClick={() => onSortClick('id')}
+                className="fas fa-sort"
+              />
             </ColTable>
             <ColTable>
               NOME
-              <i onClick={() => onSortClick('name')} className="fas fa-sort" />
+              <i
+                onClick={() => onSortClick('name')}
+                className="fas fa-sort"
+              />
             </ColTable>
             <ColTable />
           </HeaderTable>
