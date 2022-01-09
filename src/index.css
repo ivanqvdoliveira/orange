@@ -450,7 +450,7 @@ span.space{
   left: 0;
   background-color: rgba(0, 0, 0, .5);
   width: 100%;
-  z-index: 10;
+  z-index: 1000;
 }
 .modal .modal-content {
     background-color: rgba(255, 255, 255, 1);
@@ -460,10 +460,10 @@ span.space{
     padding: 37px 20px 20px;
     position: fixed;
     top: calc(50% - 40%);
-    left:  calc(50% - 35%);
+    left:  calc(50% - 175px);
     max-height: 80%;
     overflow: auto;
-    width: 70%;
+    width: 350px;
     z-index: 100;
     text-align: center;
   }
@@ -474,6 +474,7 @@ span.space{
         font-size: 20px;
         z-index: 20;
         cursor: pointer;
+        color: var(--color-default-primary);
       }
 .modal .modal-content h3 {
       border-bottom: 1px solid;
@@ -482,9 +483,9 @@ span.space{
       padding-bottom: 20px;
     }
 .modal .modal-content button {
-      margin-top: 20px;
+      margin: 20px 7px;
       border: none;
-      background-color: #292929;
+      background-color: var(--color-default-primary);
       color: #fff;
       width: auto;
       font-size: 16px;

@@ -437,6 +437,7 @@ export const CustomTitle = styled.p`
   text-align: center;
   font-weight: bold;
   margin: 20px 0;
+  color: #777;
 `
 
 export const StyledSearch = styled.div`
@@ -454,16 +455,24 @@ export const StyledSearch = styled.div`
   i {
     width: 20px;
     height: 32px;
-    margin-top: 3px;
+    margin-top: 6px;
     margin-left: 9px;
-    font-size: 25px;
+    font-size: 20px;
     cursor: pointer;
     color: var(--color-default-primary);
+  }
+
+  @media (max-width: 840px) {
+    width: calc(100% - 160px);
+  }
+
+  @media (max-width: 470px) {
+    width: 100%;
   }
 `
 
 export const StyledButtonAdd = styled.button`
-  width: 180px;
+  width: 130px;
   vertical-align: top;
   display: inline-block;
   margin-left: 30px;
@@ -473,18 +482,40 @@ export const StyledButtonAdd = styled.button`
   color: #fff;
   position: relative;
   line-height: 32px;
-  font-size: 20px;
+  font-size: 15px;
   text-transform: uppercase;
   text-align: left;
   padding: 0 20px;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: center;
+
+  @media (max-width: 470px) {
+    width: 100%;
+    margin: 20px 0 30px;
+  }
 
   i {
     border: 1px solid #fff;
     border-radius: 50%;
-    padding: 3px;
     color: #fff;
-    float: right;
-    font-size: 15px;
+    font-size: 12px;
     margin-top: 5px;
+    margin-left: 5px;
+    width: 21px;
+    height: 21px;
+    line-height: 20px;
+    text-align: center;
+  }
+`
+
+export const CustomModal = styled.div`
+  h4 {
+    margin-bottom: 10px;
+  }
+
+  button {
+    margin-top: 20px;
+    margin-bottom: 0 !important;
   }
 `
