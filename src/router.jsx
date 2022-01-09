@@ -46,7 +46,7 @@ const DefaultRoute = () => {
         <Route
           exact
           path="/"
-          component={() => <Home isMobile={isMobile} /> }
+          render={(props) => <Home {...props} isMobile={isMobile} /> }
         />
         <Route path="/dashboard" component={Dashboard}/>
         <Route path="/administration" component={Administration}/>
